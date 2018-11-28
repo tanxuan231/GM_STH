@@ -66,7 +66,7 @@ $OPENSSL_CMD ecparam -name $TEST_CA_CURVE -out $TEST_CA.pem
 $OPENSSL_CMD req -config ./CA.cnf -nodes -subj "$TEST_CA_DN" \
     -keyout $KEYS_DIR/$TEST_CA_FILE.key.pem \
     -newkey ec:$TEST_CA.pem -new \
-    -out $CERTS_DIR/$TEST_CA_FILE.req.pem
+    -out $CERTS_DIR/$TEST_CA_FILE.req.pem -sm3
 
 # Sign the certificate request in $TEST_CA_FILE.req.pem using the
 # private key in $TEST_CA_FILE.key.pem and include the CA extension.
@@ -77,7 +77,7 @@ $OPENSSL_CMD x509 -req -days $DAYS \
     -extfile $OPENSSL_DIR/openssl.cnf \
     -extensions v3_ca \
     -signkey $KEYS_DIR/$TEST_CA_FILE.key.pem \
-    -out $CERTS_DIR/$TEST_CA_FILE.cert.pem
+    -out $CERTS_DIR/$TEST_CA_FILE.cert.pem -sm3
 
 # Display the certificate
 $OPENSSL_CMD x509 -in $CERTS_DIR/$TEST_CA_FILE.cert.pem -text
@@ -101,7 +101,7 @@ echo "==========================================================================
 $OPENSSL_CMD req -config eccsignuser.cnf -nodes -subj "$TEST_SERVER_DN" \
     -keyout $KEYS_DIR/$TEST_SERVER_FILE.key.pem \
     -newkey ec:$TEST_SERVER_CURVE.pem -new \
-    -out $CERTS_DIR/$TEST_SERVER_FILE.req.pem
+    -out $CERTS_DIR/$TEST_SERVER_FILE.req.pem -sm3
 
 # Sign the certificate request in $TEST_SERVER_FILE.req.pem using the
 # CA certificate in $TEST_CA_FILE.cert.pem and the CA private key in
@@ -115,7 +115,7 @@ $OPENSSL_CMD x509 -req -days $DAYS \
     -CAkey $KEYS_DIR/$TEST_CA_FILE.key.pem \
 	-extfile $OPENSSL_DIR/openssl.cnf \
 	-extensions v3_req \
-    -out $CERTS_DIR/$TEST_SERVER_FILE.cert.pem -CAcreateserial
+    -out $CERTS_DIR/$TEST_SERVER_FILE.cert.pem -CAcreateserial -sm3
 
 # Display the certificate 
 $OPENSSL_CMD x509 -in $CERTS_DIR/$TEST_SERVER_FILE.cert.pem -text
@@ -139,7 +139,7 @@ echo "  ========================================================================
 $OPENSSL_CMD req -config eccencuser.cnf -nodes -subj "$TEST_SERVER_ENC_DN" \
     -keyout $KEYS_DIR/$TEST_SERVER_ENC_FILE.key.pem \
     -newkey ec:$TEST_SERVER_CURVE.pem -new \
-    -out $CERTS_DIR/$TEST_SERVER_ENC_FILE.req.pem
+    -out $CERTS_DIR/$TEST_SERVER_ENC_FILE.req.pem -sm3
 
 # Sign the certificate request in $TEST_SERVER_FILE.req.pem using the
 # CA certificate in $TEST_CA_FILE.cert.pem and the CA private key in
@@ -153,7 +153,7 @@ $OPENSSL_CMD x509 -req -days $DAYS \
     -CAkey $KEYS_DIR/$TEST_CA_FILE.key.pem \
 	-extfile $OPENSSL_DIR/openssl.cnf \
 	-extensions v3enc_req \
-    -out $CERTS_DIR/$TEST_SERVER_ENC_FILE.cert.pem -CAcreateserial
+    -out $CERTS_DIR/$TEST_SERVER_ENC_FILE.cert.pem -CAcreateserial -sm3
 
 # Display the certificate 
 $OPENSSL_CMD x509 -in $CERTS_DIR/$TEST_SERVER_ENC_FILE.cert.pem -text
@@ -179,7 +179,7 @@ echo "==========================================================================
 $OPENSSL_CMD req -config eccsignuser.cnf -nodes -subj "$TEST_CLIENT_DN" \
 	     -keyout $KEYS_DIR/$TEST_CLIENT_FILE.key.pem \
 	     -newkey ec:$TEST_CLIENT_CURVE.pem -new \
-	     -out $CERTS_DIR/$TEST_CLIENT_FILE.req.pem
+	     -out $CERTS_DIR/$TEST_CLIENT_FILE.req.pem -sm3
 
 # Sign the certificate request in $TEST_CLIENT_FILE.req.pem using the
 # CA certificate in $TEST_CA_FILE.cert.pem and the CA private key in
@@ -193,7 +193,7 @@ $OPENSSL_CMD x509 -req -days $DAYS \
     -CAkey $KEYS_DIR/$TEST_CA_FILE.key.pem \
 	-extfile $OPENSSL_DIR/openssl.cnf \
 	-extensions v3_req \
-    -out $CERTS_DIR/$TEST_CLIENT_FILE.cert.pem -CAcreateserial
+    -out $CERTS_DIR/$TEST_CLIENT_FILE.cert.pem -CAcreateserial -sm3
 
 # Display the certificate 
 $OPENSSL_CMD x509 -in $CERTS_DIR/$TEST_CLIENT_FILE.cert.pem -text
@@ -218,7 +218,7 @@ echo "	=========================================================================
 $OPENSSL_CMD req -config eccencuser.cnf -nodes -subj "$TEST_CLIENT_ENC_DN" \
 	     -keyout $KEYS_DIR/$TEST_CLIENT_ENC_FILE.key.pem \
 	     -newkey ec:$TEST_CLIENT_CURVE.pem -new \
-	     -out $CERTS_DIR/$TEST_CLIENT_ENC_FILE.req.pem
+	     -out $CERTS_DIR/$TEST_CLIENT_ENC_FILE.req.pem -sm3
 
 # Sign the certificate request in $TEST_CLIENT_FILE.req.pem using the
 # CA certificate in $TEST_CA_FILE.cert.pem and the CA private key in
@@ -232,7 +232,7 @@ $OPENSSL_CMD x509 -req -days $DAYS \
     -CAkey $KEYS_DIR/$TEST_CA_FILE.key.pem \
 	-extfile $OPENSSL_DIR/openssl.cnf \
 	-extensions v3enc_req \
-    -out $CERTS_DIR/$TEST_CLIENT_ENC_FILE.cert.pem -CAcreateserial
+    -out $CERTS_DIR/$TEST_CLIENT_ENC_FILE.cert.pem -CAcreateserial -sm3
 
 # Display the certificate 
 $OPENSSL_CMD x509 -in $CERTS_DIR/$TEST_CLIENT_ENC_FILE.cert.pem -text
